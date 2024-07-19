@@ -26,7 +26,7 @@ import com.keepcoding.api.app.service.ClienteService;
 public class ClienteRestController {
 	//inyectar los metodos de service.Inyecto la interfaz del servicio,no la implementacion
 	@Autowired
-	private ClienteService clienteService;
+	ClienteService clienteService;
 	
 	//Este metodo nos devuelte todos los datos
 	@GetMapping("/clientes")
@@ -45,6 +45,16 @@ public class ClienteRestController {
 	public Cliente create(@RequestBody Cliente cliente) {
 		return clienteService.guardar(cliente);
 	// para probar esto necesito una heramienta Postman	
-		
 	}
+	@GetMapping("/clientes/namelastname/{nombre}/{apellido}")
+	public List<Cliente> buscarNombre(@PathVariable String nombre,@PathVariable String apellido){
+		return clienteService.buscarPorNombreApellido(nombre,apellido);
+	}
+	
+	@GetMapping("/clientes/emailphone/{email}/{phone}")
+	public Cliente buscarEmailPhone(@PathVariable String email,@PathVariable int phone){
+		return clienteService.buscarPorEmailTelefono(email,phone);
+	}	
+		
 }
+

@@ -2,6 +2,7 @@ package com.keepcoding.api.app.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,10 +20,39 @@ import com.keepcoding.api.app.entity.Cliente;
 
 // En Spring-jpa Query Methods query cration. TE EXPLICA los metodos especiales q puedes meter en
 //CLIENTE REPOSITORY
-public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 
+//LA CLASE CIENTEREPOSITORY HEREDA DE CRUDREPOSITORY Q TIENE LOS METODOS
+//Y LE PASAMOS LA ENTIDAD Y EL TIPO DE ID. TOMA ESE REPOSITORIO PARA 
+//UTILIZARLO DD QUERAMOS
+public interface ClienteRepository extends CrudRepository<Cliente, Long> {
+	//el proceso se puede hacer de dos maneras: 
+	//a
 	//List<Cliente> findByApellido(String apellido);
+	
+	//Cliente va en mayuscula porque se refiere a nuestra entidad, al objeto
+	//=?1. Hace referencia al parametro, en este caso al apellido
+	@Query("select c from Cliente c where c.apellido =?1")
+	List<Cliente> findByApellido(String apellido);
+	
+	
+	List<Cliente> findAll();
+	
+
 	//se puede buscar por más parametros nombre y apellido
-	//@Query("select c from Cliente c where c.apellido =?1")
-	//List<Cliente> findByApellido2(String apellido);
+	
+	//El proceso se puede hacer de dos maneras:
+	
+	//a
+	//List<Cliente> findByNombreAndApellido(String nombre, String apellido);
+	
+	//b
+	@Query("select c from Cliente c where c.nombre =?1 and c.apellido =?2")
+	List<Cliente> findByNombreAndApellido(String nombre, String apellido);
+	
+	
+	//List<Cliente> findByEmailAndTelefono(String email, int telefono);
+	
+	@Query("select c from Cliente c where c.email =?1 and c.telefono =?2")
+	Cliente findByEmailAndTelefono(String email, int telefono);
+	
 }

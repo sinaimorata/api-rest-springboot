@@ -17,6 +17,13 @@ public interface ClienteService {
 
 	//metodo para registrar un cliente
 	public Cliente guardar(Cliente cliente);
+	
+	//metodo para buscar por nombre y apellido
+	public List<Cliente> buscarPorNombreApellido(String nombre,String apellido);
+	
+	//metodo para buscar por email y telefono
+	public Cliente buscarPorEmailTelefono(String email,int telefono);
+	
 }
 
 
